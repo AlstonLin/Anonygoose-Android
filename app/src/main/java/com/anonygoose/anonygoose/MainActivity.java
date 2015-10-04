@@ -7,9 +7,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.RotateAnimation;
+import android.view.animation.TranslateAnimation;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.media.MediaPlayer;
@@ -22,12 +25,10 @@ import java.util.ArrayList;
  */
 public class MainActivity extends ActionBarActivity {
 
-    public static final int DELAY = 500;
     private Typeface tf;
     private MediaPlayer mp;
     private MessageAdapter adapter;
     private String name;
-    private boolean running = false;
     private ArrayList<String[]> messages = new ArrayList<>();
     private ListView lv;
     @Override
@@ -36,7 +37,20 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.intro_screen);
         mp = MediaPlayer.create(this, R.raw.quack);
         mp.setVolume(1f, 1f);
+        setupInitialAnimation();
         setupInitialTypefaces();
+    }
+
+    public void setupInitialAnimation(){
+        ImageView img = (ImageView) findViewById(R.id.image);
+        img.setScaleX(2f);
+        img.setScaleY(2f);
+        TranslateAnimation animation = new TranslateAnimation(350f, -300f, -200f, 100f);
+        animation.setDuration(150);
+        animation.setRepeatCount(10000);
+        animation.setRepeatMode(2);
+        animation.setFillAfter(true);
+        img.startAnimation(animation);
     }
     public void setupInitialTypefaces(){
         tf = Typeface.createFromAsset(getAssets(),"comic.ttf");
@@ -56,9 +70,20 @@ public class MainActivity extends ActionBarActivity {
         adapter = new MessageAdapter(this, R.layout.list_item, messages);
         lv.setAdapter(adapter);
         //Starts update thread
-        running = true;
         DAO.getInstance().setActivity(this); //Instantiates the DAO
         setupTypefaces();
+        setupAnimations();
+    }
+
+
+    public void setupAnimations(){
+        ImageView img = (ImageView) findViewById(R.id.background);
+        RotateAnimation animation = new RotateAnimation(-90, 90);
+        animation.setDuration(1500);
+        animation.setRepeatCount(10000);
+        animation.setRepeatMode(2);
+        animation.setFillAfter(true);
+        img.startAnimation(animation);
     }
 
     public void clickSubmit(View v){
@@ -67,11 +92,6 @@ public class MainActivity extends ActionBarActivity {
         editText.setText("");
     }
 
-    @Override
-    public void onDestroy(){
-        running = false;
-        super.onDestroy();
-    }
 
 
     public void updateMessages(final String[] update) {

@@ -16,6 +16,7 @@
             android:scaleType="centerCrop"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:id="@+id/background"
             android:alpha="0.35"/>
         <ListView
             android:layout_width="match_parent"

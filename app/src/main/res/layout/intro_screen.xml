@@ -1,45 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="anonygoose"
-        android:id="@+id/title"
-        android:textSize="36sp"
-        android:layout_weight="2"
-        android:layout_gravity="center" />
+    <ImageView
+        android:src="@drawable/goose_pic"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:scaleType="center"
+        android:id="@+id/image"
+        android:alpha="0.35"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        android:layout_weight="8">
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="what do you want to be called"
-            android:textSize="16sp"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="8"
-            android:id="@+id/intro" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <EditText
-            android:layout_width="0dp"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="6"
-            android:id="@+id/name"
-            android:layout_gravity="center_vertical" />
+            android:text="anonygoose"
+            android:id="@+id/title"
+            android:textSize="36sp"
+            android:layout_weight="2"
+            android:layout_gravity="center" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:layout_weight="8">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="what do you want to be called"
+                android:textSize="16sp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="8"
+                android:id="@+id/intro" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="6"
+                android:id="@+id/name"
+                android:layout_gravity="center_vertical" />
+        </LinearLayout>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:text="lets honk"
+            android:id="@+id/start"
+            android:background="#76FF03"
+            android:onClick="clickStart"
+            android:layout_gravity="center" />
     </LinearLayout>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="2"
-        android:text="Let's Chat"
-        android:id="@+id/start"
-        android:background="#76FF03"
-        android:onClick="clickStart"
-        android:layout_gravity="center" />
-</LinearLayout>
+</FrameLayout>

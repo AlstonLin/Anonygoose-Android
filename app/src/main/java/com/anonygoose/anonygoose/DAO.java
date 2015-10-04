@@ -1,7 +1,5 @@
 package com.anonygoose.anonygoose;
 
-import android.app.Activity;
-
 import java.net.URISyntaxException;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
