@@ -24,7 +24,7 @@
             android:textSize="16sp"
             android:layout_gravity="center_vertical"
             android:layout_weight="8"
-            android:id="@+id/textView2" />
+            android:id="@+id/intro" />
 
         <EditText
             android:layout_width="0dp"

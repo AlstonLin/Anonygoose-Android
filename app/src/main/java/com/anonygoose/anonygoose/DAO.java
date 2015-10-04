@@ -1,6 +1,12 @@
 package com.anonygoose.anonygoose;
 
-import java.util.ArrayList;
+import android.app.Activity;
+
+import java.net.URISyntaxException;
+import com.github.nkzawa.emitter.Emitter;
+import com.github.nkzawa.socketio.client.IO;
+import com.github.nkzawa.socketio.client.Socket;
+
 
 /**
  * The Data Access Object (Singleton) for which the app will interact with the server.
@@ -8,24 +14,45 @@ import java.util.ArrayList;
  * @author Alston Lin
  */
 public class DAO {
-    public static ArrayList<String[]> messages = new ArrayList<>(); //TEMP
+    private MainActivity activity;
+    private static DAO instance;
+    private Socket socket;{
+        try {
+            socket = IO.socket("http://159.203.4.161:3000");
+        } catch (URISyntaxException e) {}
+    }
 
-    private static DAO instance = new DAO();
+    private Emitter.Listener messageListener = new Emitter.Listener() {
+        @Override
+        public void call(Object[] args) {
+            String[] update = new String[3];
+            update[0] = (String) args[2];
+            update[1] = (String) args[1];
+            update[2] = (String) args[0];
+            activity.updateMessages(update);
+        }
+    };
+    private DAO(){
+        socket.connect();
+        socket.on("refresh feed", messageListener);
+    } //Prevents other instances
 
-    private DAO(){} //Prevents other instances
 
     public static DAO getInstance(){
+        if (instance == null) instance = new DAO();
         return instance;
     }
-    public void pushMessage(String name, String time, String text){
-        String[] message = new String[3];
-        message[0] = name;
-        message[1] = time;
-        message[2] = text;
-        messages.add(message);
+
+
+    public void setActivity(MainActivity activity){
+        this.activity = activity;
+    }
+    /**
+     * Publishes a message containing name, and text.
+     */
+    public void pushMessage(String name, String text){
+        socket.emit("status added", text, name);
     }
 
-    public ArrayList<String[]> getMessages(){
-        return messages;
-    }
+
 }
